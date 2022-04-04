@@ -11,7 +11,7 @@ def main():
     # csv data
     rows1 = make_faults(1000)
     with open('faults.csv', 'w', encoding='UTF8', newline='') as faults:
-        writer = csv.DictWriter(faults, fieldnames=faultfieldnames)
+        writer = csv.DictWriter(faults, fieldnames=rows1[0].keys())
         writer.writeheader()
         writer.writerows(rows1)
 
@@ -21,7 +21,7 @@ def main():
     # csv data
     rows2 = make_requests(20000)
     with open('customerservices.csv', 'w', encoding='UTF8', newline='') as faults:
-        writer = csv.DictWriter(faults, fieldnames=customerservicefieldnames)
+        writer = csv.DictWriter(faults, fieldnames=rows2[0].keys())
         writer.writeheader()
         writer.writerows(rows2)
 
@@ -42,15 +42,16 @@ def make_faults(num):
             treatment_date = fake.date_between(start_date=report_date, end_date='today')
             repaired_employee_id = random.randint(1, 1000)
 
-        fake_fault = {'fault_id': x + 1000,
-                         'facility_id': random.randint(1, 100),
-                         'fault_description': fake.text(),
-                         'reporter_employee_id': random.randint(1, 1000),
-                         'report_date': report_date,
-                         'is_treatmented': is_treatmented,
-                         'treatment_date': treatment_date,
-                         'repaired_employee_id': repaired_employee_id
-                        }
+        fake_fault = {
+            'fault_id': x + 1,
+            'fault_description': fake.text(),
+            'report_date': report_date,
+            'is_treatmented': is_treatmented,
+            'treatment_date': treatment_date,
+            'reporter_employee_id': random.randint(1, 1000),
+            'repaired_employee_id': repaired_employee_id,
+            'facility_id': random.randint(1, 100)
+        }
         fake_faults.append(fake_fault)
 
     return fake_faults
@@ -72,15 +73,16 @@ def make_requests(num):
     for x in range(num):
         request_date = fake.date_between(start_date='-2y', end_date='today')
 
-        fake_request = {'customer_service_id': x + 1000,
-                         'employee_id': random.randint(1, 1000),
-                         'request_date': request_date,
-                         'treatment_date': fake.date_between(start_date=request_date, end_date='today'),
-                         'customer_phone': phn(),
-                         'customer_email': fake.email(),
-                         'request': fake.text(),
-                         'customer_name': fake.name()
-                          }
+        fake_request = {
+            'customer_service_id': x + 1,
+            'request_date': request_date,
+            'treatment_date': fake.date_between(start_date=request_date, end_date='today'),
+            'customer_name': fake.name(),
+            'customer_phone': phn(),
+            'customer_email': fake.email(),
+            'request': fake.text(),
+            'employee_id': random.randint(1, 1000)
+        }
         fake_requests.append(fake_request)
 
     return fake_requests
