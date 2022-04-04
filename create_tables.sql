@@ -6,14 +6,13 @@ CREATE TABLE Employees
 
 CREATE TABLE CustomerService
 (
-  request_type VARCHAR(20) NOT NULL,
   customer_service_id INT NOT NULL,
   request_date DATE NOT NULL,
   treatment_date DATE,
+  customer_name VARCHAR(50) NOT NULL,
   customer_phone VARCHAR(10),
   customer_email VARCHAR(50) NOT NULL,
   request VARCHAR(500) NOT NULL,
-  customer_name VARCHAR(50) NOT NULL,
   employee_id INT,
   PRIMARY KEY (customer_service_id),
   FOREIGN KEY (employee_id) REFERENCES Employees(employee_id)
