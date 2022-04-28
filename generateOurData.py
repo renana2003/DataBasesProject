@@ -36,7 +36,7 @@ def make_faults(num):
         report_date = fake.date_between(start_date='-2y', end_date='today')
         is_treatmented = random.randint(0, 1)
         treatment_date = None
-        repaired_employee_id = 0
+        repaired_employee_id = None
         
         if is_treatmented:
             treatment_date = fake.date_between(start_date=report_date, end_date='today')
@@ -44,7 +44,7 @@ def make_faults(num):
 
         fake_fault = {
             'fault_id': x + 1,
-            'fault_description': fake.text(),
+            'fault_description': fake.text(20),
             'report_date': report_date,
             'is_treatmented': is_treatmented,
             'treatment_date': treatment_date,
