@@ -64,7 +64,7 @@ def make_requests(num):
         treatment_date = None
         employee_id = None
         if is_treatmented:
-            treatment_date = fake.date_between(start_date=request_date, end_date='today'),
+            treatment_date = fake.date_between(start_date=request_date, end_date='today')
             employee_id = get_employee_id()
 
         fake_request = {
