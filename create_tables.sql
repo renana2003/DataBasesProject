@@ -10,7 +10,7 @@ CREATE TABLE CustomerService
   is_treatmented NUMERIC(1) NOT NULL,
   employee_id INT,
   PRIMARY KEY (customer_service_id),
-  FOREIGN KEY (employee_id) REFERENCES Employees(employee_id)
+  FOREIGN KEY (employee_id) REFERENCES crammer.employee(id)
 );
 
 CREATE TABLE Maintenance
@@ -20,8 +20,8 @@ CREATE TABLE Maintenance
   facility_id INT NOT NULL,
   employee_id INT NOT NULL,
   PRIMARY KEY (maintenance_id),
-  FOREIGN KEY (facility_id) REFERENCES Facilities(facility_id),
-  FOREIGN KEY (employee_id) REFERENCES Employees(employee_id)
+  FOREIGN KEY (facility_id) REFERENCES rofridma.facilities(facilities_id),
+  FOREIGN KEY (employee_id) REFERENCES crammer.employee(id)
 );
 
 CREATE TABLE CustomerServiceWords
@@ -44,7 +44,7 @@ CREATE TABLE Faults
   repaired_employee_id INT,
   facility_id INT NOT NULL,
   PRIMARY KEY (fault_id),
-  FOREIGN KEY (reporter_employee_id) REFERENCES Employees(employee_id),
-  FOREIGN KEY (repaired_employee_id) REFERENCES Employees(employee_id),
-  FOREIGN KEY (facility_id) REFERENCES Facilities(facility_id)
+  FOREIGN KEY (reporter_employee_id) REFERENCES crammer.employee(id),
+  FOREIGN KEY (repaired_employee_id) REFERENCES crammer.employee(id),
+  FOREIGN KEY (facility_id) REFERENCES rofridma.facilities(facilities_id)
 );
