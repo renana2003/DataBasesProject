@@ -1,28 +1,16 @@
-CREATE TABLE Employees
-(
-  employee_id INT NOT NULL,
-  PRIMARY KEY (employee_id)
-);
-
 CREATE TABLE CustomerService
 (
   customer_service_id INT NOT NULL,
   request_date DATE NOT NULL,
   treatment_date DATE,
-  customer_phone VARCHAR(10),
+  customer_name VARCHAR(50) NOT NULL,
+  customer_phone VARCHAR(15),
   customer_email VARCHAR(50) NOT NULL,
   request VARCHAR(500) NOT NULL,
-  customer_name VARCHAR(50) NOT NULL,
   is_treatmented NUMERIC(1) NOT NULL,
   employee_id INT,
   PRIMARY KEY (customer_service_id),
   FOREIGN KEY (employee_id) REFERENCES Employees(employee_id)
-);
-
-CREATE TABLE Facilities
-(
-  facility_id INT NOT NULL,
-  PRIMARY KEY (facility_id)
 );
 
 CREATE TABLE Maintenance
