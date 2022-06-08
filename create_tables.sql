@@ -38,7 +38,7 @@ CREATE TABLE Faults
   fault_description VARCHAR(100) NOT NULL,
   report_date DATE NOT NULL,
   is_treatmented NUMERIC(1) NOT NULL,
-  treatment_date INT,
+  treatment_date DATE,
   fault_level INT NOT NULL,
   reporter_employee_id INT NOT NULL,
   repaired_employee_id INT,
