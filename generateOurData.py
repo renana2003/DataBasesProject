@@ -2,24 +2,20 @@ import csv
 import random
 from faker import Faker
 
+fake = Faker()
+
 
 def main():
-    # csv header
-    faultfieldnames = ['fault_id', 'facility_id', 'fault_description', 'reporter_employee_id', 'report_date',
-                       'is_treatmented', 'treatment_date', 'repaired_employee_id']
 
     # csv data
-    rows1 = make_faults(1000)
+    rows1 = make_faults(1)
     with open('faults.csv', 'w', encoding='UTF8', newline='') as faults:
         writer = csv.DictWriter(faults, fieldnames=rows1[0].keys())
         writer.writeheader()
         writer.writerows(rows1)
 
-    # csv header
-    customerservicefieldnames = ['customer_service_id', 'employee_id', 'request_date', 'treatment_date', 'customer_phone', 'customer_email', 'request', 'customer_name']
-
     # csv data
-    rows2 = make_requests(20000)
+    rows2 = make_requests(1)
     with open('customerservices.csv', 'w', encoding='UTF8', newline='') as faults:
         writer = csv.DictWriter(faults, fieldnames=rows2[0].keys())
         writer.writeheader()
@@ -28,7 +24,6 @@ def main():
 
 def make_faults(num):
     # lists to randomly assign to workers
-    fake = Faker()
 
     fake_faults = []
 
@@ -40,52 +35,67 @@ def make_faults(num):
         
         if is_treatmented:
             treatment_date = fake.date_between(start_date=report_date, end_date='today')
-            repaired_employee_id = random.randint(1, 1000)
+            repaired_employee_id = get_employee_id()
 
         fake_fault = {
             'fault_id': x + 1,
-            'fault_description': fake.text(20),
+            'fault_description': fake.text(50),
             'report_date': report_date,
             'is_treatmented': is_treatmented,
             'treatment_date': treatment_date,
-            'reporter_employee_id': random.randint(1, 1000),
+            'fault_level': random.randint(1, 5),
+            'reporter_employee_id': get_employee_id(),
             'repaired_employee_id': repaired_employee_id,
-            'facility_id': random.randint(1, 100)
+            'facility_id': get_facility_id()
         }
         fake_faults.append(fake_fault)
 
     return fake_faults
 
 
-def phn():
+def make_requests(num):
+    # lists to randomly assign to workers
+
+    fake_requests = []
+
+    for x in range(num):
+        request_date = fake.date_between(start_date='-2y', end_date='today')
+        is_treatmented = random.randint(0, 1)
+        treatment_date = None
+        employee_id = None
+        if is_treatmented:
+            treatment_date = fake.date_between(start_date=request_date, end_date='today'),
+            employee_id = get_employee_id()
+
+        fake_request = {
+            'customer_service_id': x + 1,
+            'request_date': request_date,
+            'treatment_date': treatment_date,
+            'customer_name': fake.name(),
+            'customer_phone': get_phn(),
+            'customer_email': fake.email(),
+            'request': fake.text(50),
+            'is_treatmented': is_treatmented,
+            'employee_id': employee_id
+        }
+        fake_requests.append(fake_request)
+
+    return fake_requests
+
+
+def get_phn():
     n = '0500000000'
     while '9' in n[3:6] or n[3:6]=='000' or n[6]==n[7]==n[8]==n[9]:
         n = n[:2] + str(random.randint(10**7, 10**8-1))
     return n
 
 
-def make_requests(num):
-    # lists to randomly assign to workers
-    fake = Faker()
+def get_employee_id():
+    return random.randint(888888, 908887)
 
-    fake_requests = []
 
-    for x in range(num):
-        request_date = fake.date_between(start_date='-2y', end_date='today')
-
-        fake_request = {
-            'customer_service_id': x + 1,
-            'request_date': request_date,
-            'treatment_date': fake.date_between(start_date=request_date, end_date='today'),
-            'customer_name': fake.name(),
-            'customer_phone': phn(),
-            'customer_email': fake.email(),
-            'request': fake.text(),
-            'employee_id': random.randint(1, 1000)
-        }
-        fake_requests.append(fake_request)
-
-    return fake_requests
+def get_facility_id():
+    return random.randint(1, 1000)
 
 
 if __name__ == '__main__':
