@@ -8,14 +8,14 @@ fake = Faker()
 def main():
 
     # csv data
-    rows1 = make_faults(1)
+    rows1 = make_faults(2000)
     with open('faults.csv', 'w', encoding='UTF8', newline='') as faults:
         writer = csv.DictWriter(faults, fieldnames=rows1[0].keys())
         writer.writeheader()
         writer.writerows(rows1)
 
     # csv data
-    rows2 = make_requests(1)
+    rows2 = make_requests(20000)
     with open('customerservices.csv', 'w', encoding='UTF8', newline='') as faults:
         writer = csv.DictWriter(faults, fieldnames=rows2[0].keys())
         writer.writeheader()
