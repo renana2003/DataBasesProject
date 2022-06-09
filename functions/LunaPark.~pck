@@ -52,7 +52,6 @@ create or replace package body LunaPark is
         if f.fault_id = ft_id then
           dbms_output.put_line('_______ Fault _______');
           dbms_output.put_line('fault number: ' || f.fault_id);
-          dbms_output.put_line('facility id: ' || f.facility_id);
           dbms_output.put_line('report date: ' || f.report_date);
           dbms_output.put_line('description: ' || f.fault_description);
           dbms_output.put_line('level: ' || f.fault_level);
